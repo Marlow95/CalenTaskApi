@@ -4,10 +4,10 @@ namespace CalenTaskApi.Respositories
 {
     public interface IUsersRepository
     {
-        public IEnumerable<Users> GetUsers();
-        public Users GetUser(Guid id);
-        public Users PostUsers();
-        public Users UpdateUser(Guid id);
-        public Users DeleteUser(Guid id);
+        public Task<IEnumerable<Users>> GetUsersAsync();
+        public Task<Users> GetUsersAsync(Guid id);
+        public Task PostUsersAsync(Users users);
+        public Task UpdateUserAsync(Users user);
+        public Task DeleteUserAsync(Guid id);
     }
 }

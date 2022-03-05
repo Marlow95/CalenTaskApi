@@ -7,10 +7,8 @@ namespace CalenTaskApi.Entities
         public string LastName { get; init; }
         public string UserName { get; init; }
         public string Email { get; init; }
-        public string Password { get; init; }
+        public string PassWord { get; init; }
         public string About { get; init; }
-        public Enum Status { get; init; }
-        public Enum Role { get; init; }
         public DateTimeOffset CreatedAt { get; init; }
         public DateTimeOffset LastLogin { get; init;}
 
