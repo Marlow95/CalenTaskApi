@@ -59,6 +59,48 @@ namespace CalenTaskApi.Controllers
 
             return CreatedAtAction(nameof(PostUsersAsync), new { id = users.Id }, users.AsDto()); 
         }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateUserAsync(Guid id, UpdateUsersDto updatedUserDto)
+        {
+            var existingUser = await repository.GetUsersAsync(id);
+
+            if(existingUser is null)
+            {
+                return NotFound();
+            }
+
+            Users updatedUser = existingUser with {
+                FirstName = updatedUserDto.FirstName,
+                LastName = updatedUserDto.LastName,
+                UserName = updatedUserDto.UserName,
+                Email = updatedUserDto.Email,
+                About = updatedUserDto.About,
+                CreatedAt = DateTimeOffset.UtcNow,
+                LastLogin = DateTimeOffset.UtcNow
+            };
+
+            await repository.UpdateUserAsync(updatedUser);
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+
+        public async Task<ActionResult> DeleteUserAsync(Guid id)
+        {
+            var existingUser = await repository.GetUsersAsync(id);
+
+            if(existingUser is null)
+            {
+                return NotFound();
+            }
+
+            await repository.DeleteUserAsync(id);
+
+            return NoContent();
+
+        }
     }
 
 }

@@ -39,7 +39,8 @@ namespace CalenTaskApi
             return new TodoDto {
                 TodoId = todo.TodoId,
                 Description = todo.Description,
-                IsComplete = todo.IsComplete
+                IsComplete = todo.IsComplete,
+                CreatedAt = todo.CreatedAt
             };
         }
     }

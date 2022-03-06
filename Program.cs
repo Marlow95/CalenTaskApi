@@ -20,6 +20,7 @@ builder.Services.AddSingleton<IMongoClient>(serviceProvider =>
 });
 
 builder.Services.AddSingleton<IUsersRepository, MongoDbUsersRepository>();
+builder.Services.AddSingleton<ITodoRepository, MongoDbTodoRepository>();
 
 builder.Services.AddControllers(options => {
     options.SuppressAsyncSuffixInActionNames = false;
