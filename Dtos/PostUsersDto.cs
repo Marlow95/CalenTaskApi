@@ -17,7 +17,7 @@ namespace CalenTaskApi.Dtos
         public string UserName { get; init; }
 
         [Required]
-        public string PassWord {get; init; }
+        public string Password { get; init; }
 
         [Required]
         [EmailAddress]

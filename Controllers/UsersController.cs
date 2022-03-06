@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using CalenTaskApi.Respositories;
 using CalenTaskApi.Dtos;
 using CalenTaskApi.Entities;
+using System.Text;
+using System.Security.Cryptography;
 
 namespace CalenTaskApi.Controllers
 {
@@ -43,12 +45,15 @@ namespace CalenTaskApi.Controllers
         [HttpPost]
         public async Task<ActionResult<UsersDto>> PostUsersAsync(PostUsersDto usersDto)
         {
+            var hmac = new HMACSHA512();
+
             Users users = new(){
                 Id = Guid.NewGuid(),
                 FirstName = usersDto.FirstName,
                 LastName = usersDto.LastName,
                 UserName = usersDto.UserName,
-                PassWord = usersDto.PassWord,
+                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(usersDto.Password)),
+                PasswordSalt = hmac.Key,
                 Email = usersDto.Email,
                 About = usersDto.About,
                 CreatedAt = DateTimeOffset.UtcNow,
@@ -99,6 +104,35 @@ namespace CalenTaskApi.Controllers
             await repository.DeleteUserAsync(id);
 
             return NoContent();
+
+        }
+
+        //User Login Route
+
+        [HttpPost("login")]
+
+        public async Task<ActionResult<Users>> LoginUserAsync(LoginDto loginDto)
+        {
+            var user = await repository.LoginUserAsync(loginDto.UserName);
+
+            if(user is null)
+            {
+                return Unauthorized("Invalid Username");
+            }
+
+            var hmac = new HMACSHA512(user.PasswordSalt);
+
+            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
+
+            for(int i = 0; i<computedHash.Length; i++)
+            {
+                if (computedHash[i] != user.PasswordHash[i])
+                {
+                 return Unauthorized("Invalid Password");
+                }
+            }
+
+            return user;
 
         }
     }

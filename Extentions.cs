@@ -18,21 +18,6 @@ namespace CalenTaskApi
                 LastLogin = users.LastLogin
             };
         }
-        /*
-        public static PostUsersDto NewDto(this Users users)
-        {
-            return new PostUsersDto {
-                Id = users.Id,
-                FirstName = users.FirstName,
-                LastName = users.LastName,
-                UserName = users.UserName,
-                PassWord = users.PassWord,
-                Email = users.Email,
-                About = users.About,
-                CreatedAt = users.CreatedAt,
-                LastLogin = users.LastLogin
-            };
-        }*/
 
         public static TodoDto AsDtoTodo(this Todo todo)
         {

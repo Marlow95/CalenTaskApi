@@ -41,3 +41,11 @@
 /home/user/Desktop/Project/calenTask/CalenTaskApi/obj/Debug/net6.0/CalenTaskApi.pdb
 /home/user/Desktop/Project/calenTask/CalenTaskApi/obj/Debug/net6.0/CalenTaskApi.genruntimeconfig.cache
 /home/user/Desktop/Project/calenTask/CalenTaskApi/obj/Debug/net6.0/ref/CalenTaskApi.dll
+/home/user/Desktop/Project/calenTask/CalenTaskApi/bin/Debug/net6.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/home/user/Desktop/Project/calenTask/CalenTaskApi/bin/Debug/net6.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/home/user/Desktop/Project/calenTask/CalenTaskApi/bin/Debug/net6.0/Microsoft.IdentityModel.Logging.dll
+/home/user/Desktop/Project/calenTask/CalenTaskApi/bin/Debug/net6.0/Microsoft.IdentityModel.Protocols.dll
+/home/user/Desktop/Project/calenTask/CalenTaskApi/bin/Debug/net6.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/home/user/Desktop/Project/calenTask/CalenTaskApi/bin/Debug/net6.0/Microsoft.IdentityModel.Tokens.dll
+/home/user/Desktop/Project/calenTask/CalenTaskApi/bin/Debug/net6.0/System.IdentityModel.Tokens.Jwt.dll
+/home/user/Desktop/Project/calenTask/CalenTaskApi/bin/Debug/net6.0/System.Security.Permissions.dll
