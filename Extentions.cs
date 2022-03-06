@@ -37,7 +37,7 @@ namespace CalenTaskApi
         public static TodoDto AsDtoTodo(this Todo todo)
         {
             return new TodoDto {
-                TodoId = todo.TodoId,
+                Id = todo.Id,
                 Description = todo.Description,
                 IsComplete = todo.IsComplete,
                 CreatedAt = todo.CreatedAt

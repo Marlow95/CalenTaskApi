@@ -4,7 +4,7 @@ namespace CalenTaskApi.Dtos
 {
     public record TodoDto
     {
-        public Guid TodoId { get; init; }
+        public Guid Id { get; init; }
 
         [Required]
         public string Description { get; init; }

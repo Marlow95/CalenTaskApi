@@ -41,7 +41,7 @@ namespace CalenTaskApi.Controllers
         public async Task<ActionResult<TodoDto>> PostTodoAsync(TodoDto todoDto)
         {
             Todo todo = new(){
-                TodoId = Guid.NewGuid(),
+                Id = Guid.NewGuid(),
                 Description= todoDto.Description,
                 IsComplete = todoDto.IsComplete,
                 CreatedAt = DateTimeOffset.UtcNow
@@ -49,7 +49,7 @@ namespace CalenTaskApi.Controllers
 
             await repository.PostTodoAsync(todo);
 
-            return CreatedAtAction(nameof(PostTodoAsync), new { id = todo.TodoId }, todo.AsDtoTodo()); 
+            return CreatedAtAction(nameof(PostTodoAsync), new { id = todo.Id }, todo.AsDtoTodo()); 
         }
 
         [HttpPut("{id}")]
@@ -62,7 +62,7 @@ namespace CalenTaskApi.Controllers
                 return NotFound();
             }
 
-            Todo updatedTodo = new(){
+            Todo updatedTodo = existingTodo with {
                 Description= todoDto.Description,
                 IsComplete = todoDto.IsComplete,
                 CreatedAt = DateTimeOffset.UtcNow

@@ -23,7 +23,7 @@ namespace CalenTaskApi.Respositories
 
         public async Task<Todo> GetTodoAsync(Guid id)
         {
-            var filter = filterBuilder.Eq(todo => todo.TodoId, id);
+            var filter = filterBuilder.Eq(todo => todo.Id, id);
             return await todoCollection.Find(filter).SingleOrDefaultAsync();
         }
 
@@ -34,13 +34,13 @@ namespace CalenTaskApi.Respositories
 
         public async Task UpdateTodoAsync(Todo todo)
         {
-            var filter = filterBuilder.Eq(existingTodo => existingTodo.TodoId, todo.TodoId);
+            var filter = filterBuilder.Eq(existingTodo => existingTodo.Id, todo.Id);
             await todoCollection.ReplaceOneAsync(filter, todo);
         }
 
         public async Task DeleteTodoAsync(Guid id)
         {
-            var filter = filterBuilder.Eq(todo => todo.TodoId, id);
+            var filter = filterBuilder.Eq(todo => todo.Id, id);
             await todoCollection.DeleteOneAsync(filter);
         }
 
