@@ -10,6 +10,8 @@ namespace CalenTaskApi.Entities
         public byte[] PasswordHash { get; init; }
         public byte[] PasswordSalt { get; init; }
         public string About { get; init; }
+        public string Token { get; set; }
+        public string Role { get; init; }
         public DateTimeOffset CreatedAt { get; init; }
         public DateTimeOffset LastLogin { get; init;}
 

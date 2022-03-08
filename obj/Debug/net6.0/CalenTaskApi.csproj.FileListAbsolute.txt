@@ -49,3 +49,7 @@
 /home/user/Desktop/Project/calenTask/CalenTaskApi/bin/Debug/net6.0/Microsoft.IdentityModel.Tokens.dll
 /home/user/Desktop/Project/calenTask/CalenTaskApi/bin/Debug/net6.0/System.IdentityModel.Tokens.Jwt.dll
 /home/user/Desktop/Project/calenTask/CalenTaskApi/bin/Debug/net6.0/System.Security.Permissions.dll
+/home/user/Desktop/Project/calenTask/CalenTaskApi/bin/Debug/net6.0/Microsoft.Extensions.DependencyModel.dll
+/home/user/Desktop/Project/calenTask/CalenTaskApi/bin/Debug/net6.0/Scrutor.dll
+/home/user/Desktop/Project/calenTask/CalenTaskApi/bin/Debug/net6.0/Swashbuckle.AspNetCore.Filters.dll
+/home/user/Desktop/Project/calenTask/CalenTaskApi/bin/Debug/net6.0/Swashbuckle.AspNetCore.Filters.Abstractions.dll

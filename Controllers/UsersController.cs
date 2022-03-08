@@ -4,6 +4,7 @@ using CalenTaskApi.Dtos;
 using CalenTaskApi.Entities;
 using System.Text;
 using System.Security.Cryptography;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CalenTaskApi.Controllers
 {
@@ -12,13 +13,14 @@ namespace CalenTaskApi.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUsersRepository repository; //repository object goes here
-
-        public UsersController(IUsersRepository repository) //dependency injection
+        private readonly ITokenRepository tokenRepository;
+        public UsersController(IUsersRepository repository, ITokenRepository tokenRepository) //dependency injection
         {
             this.repository = repository;
+            this.tokenRepository = tokenRepository;
         }
 
-    
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IEnumerable<UsersDto>> GetUsersAsync()
         {
@@ -26,11 +28,10 @@ namespace CalenTaskApi.Controllers
             return users;
         } 
 
-
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<UsersDto>> GetUsersAsync(Guid id)
         {
-
             var users = await repository.GetUsersAsync(id);
 
             if(users is null)
@@ -45,6 +46,12 @@ namespace CalenTaskApi.Controllers
         [HttpPost]
         public async Task<ActionResult<UsersDto>> PostUsersAsync(PostUsersDto usersDto)
         {
+            /* Create custom validator maybe
+            if(usersDto.UserName)
+            {
+                return BadRequest("This Username is Already Taken");
+            } */
+
             var hmac = new HMACSHA512();
 
             Users users = new(){
@@ -56,6 +63,7 @@ namespace CalenTaskApi.Controllers
                 PasswordSalt = hmac.Key,
                 Email = usersDto.Email,
                 About = usersDto.About,
+                Role = "Basic",
                 CreatedAt = DateTimeOffset.UtcNow,
                 LastLogin = DateTimeOffset.UtcNow
             };
@@ -65,6 +73,7 @@ namespace CalenTaskApi.Controllers
             return CreatedAtAction(nameof(PostUsersAsync), new { id = users.Id }, users.AsDto()); 
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateUserAsync(Guid id, UpdateUsersDto updatedUserDto)
         {
@@ -90,6 +99,7 @@ namespace CalenTaskApi.Controllers
             return NoContent();
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
 
         public async Task<ActionResult> DeleteUserAsync(Guid id)
@@ -111,7 +121,7 @@ namespace CalenTaskApi.Controllers
 
         [HttpPost("login")]
 
-        public async Task<ActionResult<Users>> LoginUserAsync(LoginDto loginDto)
+        public async Task<ActionResult> LoginUserAsync(LoginDto loginDto)
         {
             var user = await repository.LoginUserAsync(loginDto.UserName);
 
@@ -123,16 +133,17 @@ namespace CalenTaskApi.Controllers
             var hmac = new HMACSHA512(user.PasswordSalt);
 
             var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
-
-            for(int i = 0; i<computedHash.Length; i++)
+            
+            if (computedHash.SequenceEqual(user.PasswordHash) == false)
             {
-                if (computedHash[i] != user.PasswordHash[i])
-                {
-                 return Unauthorized("Invalid Password");
-                }
+                return Unauthorized("Invalid Password");
             }
+            
+            string token = tokenRepository.CreateToken(user);
+            user.Token = token;
 
-            return user;
+            //return Ok("You are logged in.");
+            return Ok(user);
 
         }
     }
