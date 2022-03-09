@@ -18,7 +18,7 @@ namespace CalenTaskApi.Respositories
         {
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.NameId,user.UserName),
+                new Claim(ClaimTypes.Name,user.UserName),
                 new Claim(ClaimTypes.Role, user.Role)
             };
 

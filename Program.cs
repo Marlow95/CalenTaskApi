@@ -1,7 +1,10 @@
+using System.Net.Mime;
 using System.Text;
+using System.Text.Json;
 using CalenTaskApi.Respositories;
 using CalenTaskApi.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MongoDB.Bson;
@@ -27,6 +30,11 @@ builder.Services.AddSingleton<IMongoClient>(serviceProvider =>
 builder.Services.AddSingleton<IUsersRepository, MongoDbUsersRepository>();
 builder.Services.AddSingleton<ITodoRepository, MongoDbTodoRepository>();
 builder.Services.AddScoped<ITokenRepository, TokenRepository>();
+builder.Services.AddHealthChecks()
+    .AddMongoDb(mongoDbSettings.ConnectionString,
+     name: "calentask", 
+     timeout: TimeSpan.FromSeconds(3),
+     tags: new[] { "ready" });
 
 builder.Services.AddControllers(options => {
     options.SuppressAsyncSuffixInActionNames = false;
@@ -67,12 +75,39 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+if(app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 
 app.UseAuthentication();
 
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHealthChecks("/health/ready", new HealthCheckOptions{
+    Predicate = (check) => check.Tags.Contains("ready"),
+    ResponseWriter = async(context, report) =>
+    {
+        var result = JsonSerializer.Serialize(
+            new{
+                status = report.Status.ToString(),
+                checks = report.Entries.Select(entry => new {
+                    name = entry.Key,
+                    status = entry.Value.Status.ToString(),
+                    exception = entry.Value.Exception != null ? entry.Value.Exception.Message : "none",
+                    duration = entry.Value.Duration.ToString()
+                })
+            }
+        );
+        context.Response.ContentType = MediaTypeNames.Application.Json;
+        await context.Response.WriteAsync(result);
+    }
+});
+
+app.MapHealthChecks("/health/live", new HealthCheckOptions{
+    Predicate = (__) => false
+});
 
 app.Run();

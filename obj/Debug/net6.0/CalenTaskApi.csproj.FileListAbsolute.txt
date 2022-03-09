@@ -53,3 +53,6 @@
 /home/user/Desktop/Project/calenTask/CalenTaskApi/bin/Debug/net6.0/Scrutor.dll
 /home/user/Desktop/Project/calenTask/CalenTaskApi/bin/Debug/net6.0/Swashbuckle.AspNetCore.Filters.dll
 /home/user/Desktop/Project/calenTask/CalenTaskApi/bin/Debug/net6.0/Swashbuckle.AspNetCore.Filters.Abstractions.dll
+/home/user/Desktop/Project/calenTask/CalenTaskApi/bin/Debug/net6.0/HealthChecks.MongoDb.dll
+/home/user/Desktop/Project/calenTask/CalenTaskApi/bin/Debug/net6.0/Microsoft.Extensions.Diagnostics.HealthChecks.dll
+/home/user/Desktop/Project/calenTask/CalenTaskApi/bin/Debug/net6.0/Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions.dll
