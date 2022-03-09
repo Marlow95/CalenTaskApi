@@ -2,6 +2,7 @@ using CalenTaskApi.Dtos;
 using CalenTaskApi.Entities;
 using CalenTaskApi.Respositories;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CalenTaskApi.Controllers
@@ -16,6 +17,7 @@ namespace CalenTaskApi.Controllers
             this.repository = repository;
         }
 
+        [EnableCors("AllowOriginsPolicy")]
         [Authorize]
         [HttpGet]
         public async Task<IEnumerable<TodoDto>> GetTodoAsync()
@@ -24,6 +26,7 @@ namespace CalenTaskApi.Controllers
             return todo;
         } 
 
+        [EnableCors("AllowOriginsPolicy")]
         [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<TodoDto>> GetTodoAsync(Guid id)
@@ -40,6 +43,7 @@ namespace CalenTaskApi.Controllers
 
         }
 
+        [EnableCors("AllowOriginsPolicy")]
         [Authorize]
         [HttpPost]
         public async Task<ActionResult<TodoDto>> PostTodoAsync(PostTodoDto todoDto)
@@ -56,6 +60,7 @@ namespace CalenTaskApi.Controllers
             return CreatedAtAction(nameof(PostTodoAsync), new { id = todo.Id }, todo.AsDtoTodo()); 
         }
         
+        [EnableCors("AllowOriginsPolicy")]
         [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateTodoAsync(Guid id, TodoDto todoDto)
@@ -77,7 +82,8 @@ namespace CalenTaskApi.Controllers
 
             return NoContent();
         }
-
+        
+        [EnableCors("AllowOriginsPolicy")]
         [Authorize]
         [HttpDelete("{id}")]
 

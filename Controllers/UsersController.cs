@@ -5,6 +5,7 @@ using CalenTaskApi.Entities;
 using System.Text;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 
 namespace CalenTaskApi.Controllers
 {
@@ -20,6 +21,7 @@ namespace CalenTaskApi.Controllers
             this.tokenRepository = tokenRepository;
         }
 
+        [EnableCors("AllowOriginsPolicy")]
         [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IEnumerable<UsersDto>> GetUsersAsync()
@@ -27,7 +29,8 @@ namespace CalenTaskApi.Controllers
             var users = (await repository.GetUsersAsync()).Select(users => users.AsDto());
             return users;
         } 
-        
+
+        [EnableCors("AllowOriginsPolicy")]
         [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<UsersDto>> GetUsersAsync(Guid id)
@@ -43,6 +46,7 @@ namespace CalenTaskApi.Controllers
 
         }
 
+        [EnableCors("AllowOriginsPolicy")]
         [HttpPost]
         public async Task<ActionResult<UsersDto>> PostUsersAsync(PostUsersDto usersDto)
         {
@@ -73,6 +77,7 @@ namespace CalenTaskApi.Controllers
             return CreatedAtAction(nameof(PostUsersAsync), new { id = users.Id }, users.AsDto()); 
         }
 
+        [EnableCors("AllowOriginsPolicy")]
         [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateUserAsync(Guid id, UpdateUsersDto updatedUserDto)
@@ -99,6 +104,7 @@ namespace CalenTaskApi.Controllers
             return NoContent();
         }
 
+        [EnableCors("AllowOriginsPolicy")]
         [Authorize]
         [HttpDelete("{id}")]
 
@@ -118,7 +124,8 @@ namespace CalenTaskApi.Controllers
         }
 
         //User Login Route
-
+        
+        [EnableCors("AllowOriginsPolicy")]
         [HttpPost("login")]
 
         public async Task<ActionResult> LoginUserAsync(LoginDto loginDto)

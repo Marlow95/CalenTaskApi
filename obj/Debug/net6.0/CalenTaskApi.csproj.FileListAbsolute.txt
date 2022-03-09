@@ -56,3 +56,9 @@
 /home/user/Desktop/Project/calenTask/CalenTaskApi/bin/Debug/net6.0/HealthChecks.MongoDb.dll
 /home/user/Desktop/Project/calenTask/CalenTaskApi/bin/Debug/net6.0/Microsoft.Extensions.Diagnostics.HealthChecks.dll
 /home/user/Desktop/Project/calenTask/CalenTaskApi/bin/Debug/net6.0/Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions.dll
+/home/user/Desktop/Project/calenTask/CalenTaskApi/bin/Debug/net6.0/System.Web.Cors.dll
+/home/user/Desktop/Project/calenTask/CalenTaskApi/bin/Debug/net6.0/System.Net.Http.Formatting.dll
+/home/user/Desktop/Project/calenTask/CalenTaskApi/bin/Debug/net6.0/System.Web.Http.dll
+/home/user/Desktop/Project/calenTask/CalenTaskApi/bin/Debug/net6.0/System.Web.Http.Cors.dll
+/home/user/Desktop/Project/calenTask/CalenTaskApi/bin/Debug/net6.0/Newtonsoft.Json.dll
+/home/user/Desktop/Project/calenTask/CalenTaskApi/bin/Debug/net6.0/Newtonsoft.Json.Bson.dll
