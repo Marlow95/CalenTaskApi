@@ -42,7 +42,7 @@ namespace CalenTaskApi.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult<TodoDto>> PostTodoAsync(TodoDto todoDto)
+        public async Task<ActionResult<TodoDto>> PostTodoAsync(PostTodoDto todoDto)
         {
             Todo todo = new(){
                 Id = Guid.NewGuid(),

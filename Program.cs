@@ -13,6 +13,7 @@ using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
 using Swashbuckle.AspNetCore.Filters;
 
+var AllowOriginsPolicy = "_AllowOriginsPolicy";
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -66,6 +67,16 @@ builder.Services.AddSwaggerGen(options => {
     options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: AllowOriginsPolicy,
+    builder =>
+    {
+        builder.WithOrigins("https://localhost:7147/", "http://localhost:3000/");
+    });
+
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -79,6 +90,8 @@ if(app.Environment.IsDevelopment())
 {
     app.UseHttpsRedirection();
 }
+
+app.UseCors(AllowOriginsPolicy);
 
 app.UseAuthentication();
 

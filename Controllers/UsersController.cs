@@ -27,7 +27,7 @@ namespace CalenTaskApi.Controllers
             var users = (await repository.GetUsersAsync()).Select(users => users.AsDto());
             return users;
         } 
-
+        
         [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<UsersDto>> GetUsersAsync(Guid id)
