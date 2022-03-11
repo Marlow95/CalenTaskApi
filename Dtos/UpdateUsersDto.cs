@@ -17,8 +17,6 @@ namespace CalenTaskApi.Dtos
         [EmailAddress]
         public string Email { get; init; }
         public string About { get; init; }
-        public DateTimeOffset CreatedAt { get; init; }
-        public DateTimeOffset LastLogin { get; init;}
 
     }
 }

@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.Json;
 using CalenTaskApi.Respositories;
 using CalenTaskApi.Settings;
+using CalenTaskApi.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.IdentityModel.Tokens;
@@ -12,6 +13,7 @@ using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
 using Swashbuckle.AspNetCore.Filters;
+using CalenTaskApi.Service;
 
 var AllowOriginsPolicy = "_AllowOriginsPolicy";
 var builder = WebApplication.CreateBuilder(args);
@@ -30,7 +32,10 @@ builder.Services.AddSingleton<IMongoClient>(serviceProvider =>
 
 builder.Services.AddSingleton<IUsersRepository, MongoDbUsersRepository>();
 builder.Services.AddSingleton<ITodoRepository, MongoDbTodoRepository>();
-builder.Services.AddScoped<ITokenRepository, TokenRepository>();
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IReadJwtTokenService, ReadJwtTokenService>();
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddHealthChecks()
     .AddMongoDb(mongoDbSettings.ConnectionString,
      name: "calentask", 

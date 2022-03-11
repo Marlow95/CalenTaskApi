@@ -1,10 +1,10 @@
 using CalenTaskApi.Dtos;
 using CalenTaskApi.Entities;
 using CalenTaskApi.Respositories;
+using CalenTaskApi.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Driver;
 
 namespace CalenTaskApi.Controllers
 {
@@ -13,9 +13,11 @@ namespace CalenTaskApi.Controllers
     public class TodoController : ControllerBase
     {
         private readonly ITodoRepository repository;
-        public TodoController(ITodoRepository repository)
+        private readonly IReadJwtTokenService readJwt;
+        public TodoController(ITodoRepository repository, IReadJwtTokenService readJwt)
         {
             this.repository = repository;
+            this.readJwt = readJwt;
         }
 
         [EnableCors("AllowOriginsPolicy")]
@@ -53,7 +55,8 @@ namespace CalenTaskApi.Controllers
                 Id = Guid.NewGuid(),
                 Description= todoDto.Description,
                 IsComplete = todoDto.IsComplete,
-                CreatedAt = DateTimeOffset.UtcNow
+                CreatedAt = DateTimeOffset.UtcNow,
+                UserId = readJwt.GetUserId()
             };
 
             await repository.PostTodoAsync(todo);
@@ -64,7 +67,7 @@ namespace CalenTaskApi.Controllers
         [EnableCors("AllowOriginsPolicy")]
         [Authorize]
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateTodoAsync(Guid id, TodoDto todoDto)
+        public async Task<ActionResult> UpdateTodoAsync(Guid id, UpdateTodoDto todoDto)
         {
             var existingTodo = await repository.GetTodoAsync(id);
 

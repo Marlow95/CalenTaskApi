@@ -1,8 +1,8 @@
 using CalenTaskApi.Entities;
 
-namespace CalenTaskApi.Respositories
+namespace CalenTaskApi.Service
 {
-    public interface ITokenRepository
+    public interface ITokenService
     {
         public string CreateToken(Users user);
         

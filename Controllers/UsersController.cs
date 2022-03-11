@@ -6,6 +6,7 @@ using System.Text;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
+using CalenTaskApi.Service;
 
 namespace CalenTaskApi.Controllers
 {
@@ -14,11 +15,11 @@ namespace CalenTaskApi.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUsersRepository repository; //repository object goes here
-        private readonly ITokenRepository tokenRepository;
-        public UsersController(IUsersRepository repository, ITokenRepository tokenRepository) //dependency injection
+        private readonly ITokenService tokenService;
+        public UsersController(IUsersRepository repository, ITokenService tokenService) //dependency injection
         {
             this.repository = repository;
-            this.tokenRepository = tokenRepository;
+            this.tokenService = tokenService;
         }
 
         [EnableCors("AllowOriginsPolicy")]
@@ -146,7 +147,7 @@ namespace CalenTaskApi.Controllers
                 return Unauthorized("Invalid Password");
             }
             
-            string token = tokenRepository.CreateToken(user);
+            string token = tokenService.CreateToken(user);
             user.Token = token;
             user.LastLogin = DateTimeOffset.UtcNow;
 

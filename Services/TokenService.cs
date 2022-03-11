@@ -1,4 +1,5 @@
 using CalenTaskApi.Entities;
+using CalenTaskApi.Service;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -6,11 +7,11 @@ using System.Text;
 
 namespace CalenTaskApi.Respositories
 {
-    public class TokenRepository : ITokenRepository
+    public class TokenService : ITokenService
     {
         private readonly SymmetricSecurityKey _key;
 
-        public TokenRepository(IConfiguration config)
+        public TokenService(IConfiguration config)
         {
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JwtSettings:TokenKey"]));
         }
@@ -18,7 +19,8 @@ namespace CalenTaskApi.Respositories
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name,user.UserName),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.UserName),
                 new Claim(ClaimTypes.Role, user.Role)
             };
 
