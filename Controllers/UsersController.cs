@@ -148,6 +148,7 @@ namespace CalenTaskApi.Controllers
             
             string token = tokenRepository.CreateToken(user);
             user.Token = token;
+            user.LastLogin = DateTimeOffset.UtcNow;
 
             //return Ok("You are logged in.");
             return Ok(user);

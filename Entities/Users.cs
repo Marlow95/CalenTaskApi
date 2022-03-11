@@ -13,7 +13,7 @@ namespace CalenTaskApi.Entities
         public string Token { get; set; }
         public string Role { get; init; }
         public DateTimeOffset CreatedAt { get; init; }
-        public DateTimeOffset LastLogin { get; init;}
+        public DateTimeOffset LastLogin { get; set;}
 
     }
 }
