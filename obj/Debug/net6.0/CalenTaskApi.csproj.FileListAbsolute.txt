@@ -62,3 +62,4 @@
 /home/user/Desktop/Project/calenTask/CalenTaskApi/bin/Debug/net6.0/System.Web.Http.Cors.dll
 /home/user/Desktop/Project/calenTask/CalenTaskApi/bin/Debug/net6.0/Newtonsoft.Json.dll
 /home/user/Desktop/Project/calenTask/CalenTaskApi/bin/Debug/net6.0/Newtonsoft.Json.Bson.dll
+/home/user/Desktop/Project/calenTask/CalenTaskApi/bin/Debug/net6.0/Microsoft.AspNetCore.Authentication.Google.dll

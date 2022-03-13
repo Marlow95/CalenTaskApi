@@ -27,7 +27,7 @@ namespace CalenTaskApi.Respositories
             return await usersCollection.Find(filter).SingleOrDefaultAsync();
         }
 
-        public async Task<Users> LoginUserAsync(string username)
+        public async Task<Users> GetLoginUserAsync(string username)
         {
             var filter = filterBuilder.Eq(users => users.UserName, username);
             return await usersCollection.Find(filter).SingleOrDefaultAsync();

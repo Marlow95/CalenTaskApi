@@ -9,6 +9,6 @@ namespace CalenTaskApi.Respositories
         public Task PostUsersAsync(Users users);
         public Task UpdateUserAsync(Users user);
         public Task DeleteUserAsync(Guid id);
-        public Task<Users> LoginUserAsync(string username);
+        public Task<Users> GetLoginUserAsync(string username);
     }
 }

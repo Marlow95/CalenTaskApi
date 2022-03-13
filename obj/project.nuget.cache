@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ecTOBaXVRvbNbnbRcTI3Bqgbqe0SMAmWMIO6sU0MxwCVtpqbmE/b2vm6c6w22o9Mb7FCZg/GKD3bOGhHFqCteA==",
+  "dgSpecHash": "tDKo+hizmPtO4teFAEcuHj/mE8VmfrGIKg5uuYXBozaanEN4WpHOcgrvn95WW9pio/N7Sb2vfrPtZYKFpW+qZg==",
   "success": true,
   "projectFilePath": "/home/user/Desktop/Project/calenTask/CalenTaskApi/CalenTaskApi.csproj",
   "expectedPackageFiles": [
@@ -13,6 +13,7 @@
     "/home/user/.nuget/packages/microsoft.aspnetcore.authentication/2.2.0/microsoft.aspnetcore.authentication.2.2.0.nupkg.sha512",
     "/home/user/.nuget/packages/microsoft.aspnetcore.authentication.abstractions/2.2.0/microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",
     "/home/user/.nuget/packages/microsoft.aspnetcore.authentication.core/2.2.0/microsoft.aspnetcore.authentication.core.2.2.0.nupkg.sha512",
+    "/home/user/.nuget/packages/microsoft.aspnetcore.authentication.google/6.0.3/microsoft.aspnetcore.authentication.google.6.0.3.nupkg.sha512",
     "/home/user/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/6.0.2/microsoft.aspnetcore.authentication.jwtbearer.6.0.2.nupkg.sha512",
     "/home/user/.nuget/packages/microsoft.aspnetcore.cryptography.internal/2.2.0/microsoft.aspnetcore.cryptography.internal.2.2.0.nupkg.sha512",
     "/home/user/.nuget/packages/microsoft.aspnetcore.dataprotection/2.2.0/microsoft.aspnetcore.dataprotection.2.2.0.nupkg.sha512",

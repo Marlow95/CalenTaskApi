@@ -14,6 +14,7 @@ using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
 using Swashbuckle.AspNetCore.Filters;
 using CalenTaskApi.Service;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var AllowOriginsPolicy = "_AllowOriginsPolicy";
 var builder = WebApplication.CreateBuilder(args);
@@ -57,6 +58,19 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = false
         };
     });
+
+builder.Services.AddAuthentication(options => {
+    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+})
+        .AddCookie(options =>
+        {
+            options.LoginPath = "/users/google/login"; 
+        })
+        .AddGoogle(options =>
+        {
+            options.ClientId = builder.Configuration.GetSection("GoogleOauthSettings:ClientId").Value;
+            options.ClientSecret = builder.Configuration.GetSection("GoogleOauthSettings:ClientSecret").Value;
+        });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

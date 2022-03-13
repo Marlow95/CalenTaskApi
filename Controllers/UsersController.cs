@@ -7,6 +7,10 @@ using System.Security.Cryptography;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using CalenTaskApi.Service;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Newtonsoft.Json;
 
 namespace CalenTaskApi.Controllers
 {
@@ -51,11 +55,14 @@ namespace CalenTaskApi.Controllers
         [HttpPost]
         public async Task<ActionResult<UsersDto>> PostUsersAsync(PostUsersDto usersDto)
         {
-            /* Create custom validator maybe
-            if(usersDto.UserName)
+             //Searches for username this is also used in the login user route
+            var user = await repository.GetLoginUserAsync(usersDto.UserName);
+
+            //Checks if Username Already Exists
+            if(user.UserName.Equals(usersDto.UserName))
             {
                 return BadRequest("This Username is Already Taken");
-            } */
+            };
 
             var hmac = new HMACSHA512();
 
@@ -129,9 +136,10 @@ namespace CalenTaskApi.Controllers
         [EnableCors("AllowOriginsPolicy")]
         [HttpPost("login")]
 
-        public async Task<ActionResult> LoginUserAsync(LoginDto loginDto)
+        public async Task<ActionResult> GetLoginUserAsync(LoginDto loginDto)
         {
-            var user = await repository.LoginUserAsync(loginDto.UserName);
+            //Searches for the Users Username
+            var user = await repository.GetLoginUserAsync(loginDto.UserName);
 
             if(user is null)
             {
@@ -154,6 +162,33 @@ namespace CalenTaskApi.Controllers
             //return Ok("You are logged in.");
             return Ok(user);
 
+        }
+
+        [HttpPost("google/login")]
+        public IActionResult LoginWithGoogle(GoogleLoginDto googleLoginDto)
+        {
+            var properties = new AuthenticationProperties { RedirectUri = Url.Action("GoogleResponse") };
+            return Challenge(properties, GoogleDefaults.AuthenticationScheme);
+
+        }
+
+        [HttpPost("google/response")]
+        public async Task<ActionResult<string>> GoogleResponse()
+        {
+            var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+    
+            var claims = result.Principal.Identities
+                .FirstOrDefault().Claims.Select(claim => new
+            {
+                claim.Issuer,
+                claim.OriginalIssuer,
+                claim.Type,
+                claim.Value
+            });
+
+            var claimsJson = JsonConvert.SerializeObject(claims);
+
+            return claimsJson;
         }
     }
 
