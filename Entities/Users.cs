@@ -12,6 +12,7 @@ namespace CalenTaskApi.Entities
         public string About { get; init; }
         public string Token { get; set; }
         public string Role { get; init; }
+        public bool IsSuccess { get; set; }
         public DateTimeOffset CreatedAt { get; init; }
         public DateTimeOffset LastLogin { get; set;}
 

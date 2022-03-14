@@ -20,7 +20,7 @@ namespace CalenTaskApi.Controllers
             this.readJwt = readJwt;
         }
 
-        [EnableCors("AllowOriginsPolicy")]
+        [EnableCors]
         [Authorize]
         [HttpGet]
         public async Task<IEnumerable<TodoDto>> GetTodoAsync()
@@ -29,7 +29,7 @@ namespace CalenTaskApi.Controllers
             return todo;
         } 
 
-        [EnableCors("AllowOriginsPolicy")]
+        [EnableCors]
         [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<TodoDto>> GetTodoAsync(Guid id)
@@ -46,7 +46,7 @@ namespace CalenTaskApi.Controllers
 
         }
 
-        [EnableCors("AllowOriginsPolicy")]
+        [EnableCors]
         [Authorize]
         [HttpPost]
         public async Task<ActionResult<TodoDto>> PostTodoAsync(PostTodoDto todoDto)
@@ -64,7 +64,7 @@ namespace CalenTaskApi.Controllers
             return CreatedAtAction(nameof(PostTodoAsync), new { id = todo.Id }, todo.AsDtoTodo()); 
         }
         
-        [EnableCors("AllowOriginsPolicy")]
+        [EnableCors]
         [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateTodoAsync(Guid id, UpdateTodoDto todoDto)
@@ -87,7 +87,7 @@ namespace CalenTaskApi.Controllers
             return NoContent();
         }
         
-        [EnableCors("AllowOriginsPolicy")]
+        [EnableCors]
         [Authorize]
         [HttpDelete("{id}")]
 

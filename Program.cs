@@ -59,6 +59,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+/*
 builder.Services.AddAuthentication(options => {
     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 })
@@ -70,8 +71,8 @@ builder.Services.AddAuthentication(options => {
         {
             options.ClientId = builder.Configuration.GetSection("GoogleOauthSettings:ClientId").Value;
             options.ClientSecret = builder.Configuration.GetSection("GoogleOauthSettings:ClientSecret").Value;
-        });
-
+        }); 
+*/
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options => {
@@ -86,16 +87,20 @@ builder.Services.AddSwaggerGen(options => {
     options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: AllowOriginsPolicy,
     builder =>
     {
-        builder.WithOrigins("https://localhost:7147", "http://localhost:3000")
-        .AllowAnyHeader();
+        builder.WithOrigins("https://localhost:7147", "http://localhost:3000", "http://localhost:5231")
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials();
     });
 
 });
+
 
 var app = builder.Build();
 

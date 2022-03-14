@@ -7,10 +7,10 @@ using System.Security.Cryptography;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using CalenTaskApi.Service;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Google;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Newtonsoft.Json;
+//using Microsoft.AspNetCore.Authentication;
+//using Microsoft.AspNetCore.Authentication.Google;
+//using Microsoft.AspNetCore.Authentication.Cookies;
+//using Newtonsoft.Json;
 
 namespace CalenTaskApi.Controllers
 {
@@ -26,7 +26,7 @@ namespace CalenTaskApi.Controllers
             this.tokenService = tokenService;
         }
 
-        [EnableCors("AllowOriginsPolicy")]
+        [EnableCors]
         [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IEnumerable<UsersDto>> GetUsersAsync()
@@ -35,7 +35,7 @@ namespace CalenTaskApi.Controllers
             return users;
         } 
 
-        [EnableCors("AllowOriginsPolicy")]
+        [EnableCors]
         [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<UsersDto>> GetUsersAsync(Guid id)
@@ -51,10 +51,11 @@ namespace CalenTaskApi.Controllers
 
         }
 
-        [EnableCors("AllowOriginsPolicy")]
+        [EnableCors]
         [HttpPost]
         public async Task<ActionResult<UsersDto>> PostUsersAsync(PostUsersDto usersDto)
-        {
+        {   
+            /*
              //Searches for username this is also used in the login user route
             var user = await repository.GetLoginUserAsync(usersDto.UserName);
 
@@ -62,7 +63,7 @@ namespace CalenTaskApi.Controllers
             if(user.UserName.Equals(usersDto.UserName))
             {
                 return BadRequest("This Username is Already Taken");
-            };
+            };*/
 
             var hmac = new HMACSHA512();
 
@@ -71,7 +72,7 @@ namespace CalenTaskApi.Controllers
                 FirstName = usersDto.FirstName,
                 LastName = usersDto.LastName,
                 UserName = usersDto.UserName,
-                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(usersDto.Password)),
+                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(usersDto.PassWord)),
                 PasswordSalt = hmac.Key,
                 Email = usersDto.Email,
                 About = usersDto.About,
@@ -85,7 +86,7 @@ namespace CalenTaskApi.Controllers
             return CreatedAtAction(nameof(PostUsersAsync), new { id = users.Id }, users.AsDto()); 
         }
 
-        [EnableCors("AllowOriginsPolicy")]
+        [EnableCors]
         [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateUserAsync(Guid id, UpdateUsersDto updatedUserDto)
@@ -112,7 +113,7 @@ namespace CalenTaskApi.Controllers
             return NoContent();
         }
 
-        [EnableCors("AllowOriginsPolicy")]
+        [EnableCors]
         [Authorize]
         [HttpDelete("{id}")]
 
@@ -133,7 +134,7 @@ namespace CalenTaskApi.Controllers
 
         //User Login Route
         
-        [EnableCors("AllowOriginsPolicy")]
+        [EnableCors]
         [HttpPost("login")]
 
         public async Task<ActionResult> GetLoginUserAsync(LoginDto loginDto)
@@ -158,12 +159,15 @@ namespace CalenTaskApi.Controllers
             string token = tokenService.CreateToken(user);
             user.Token = token;
             user.LastLogin = DateTimeOffset.UtcNow;
+            user.IsSuccess = true;
 
             //return Ok("You are logged in.");
             return Ok(user);
 
         }
 
+
+        /*
         [HttpPost("google/login")]
         public IActionResult LoginWithGoogle(GoogleLoginDto googleLoginDto)
         {
@@ -189,7 +193,8 @@ namespace CalenTaskApi.Controllers
             var claimsJson = JsonConvert.SerializeObject(claims);
 
             return claimsJson;
-        }
+        } 
+        */
     }
 
 }
