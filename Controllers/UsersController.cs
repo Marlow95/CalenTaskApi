@@ -161,6 +161,8 @@ namespace CalenTaskApi.Controllers
             user.LastLogin = DateTimeOffset.UtcNow;
             user.IsSuccess = true;
 
+            //Response.Cookies.Append("X-Access-Token", token, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
+
             //return Ok("You are logged in.");
             return Ok(user);
 

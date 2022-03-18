@@ -2,6 +2,7 @@ using CalenTaskApi.Dtos;
 using CalenTaskApi.Entities;
 using CalenTaskApi.Respositories;
 using CalenTaskApi.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -88,7 +89,7 @@ namespace CalenTaskApi.Controllers
         }
         
         [EnableCors]
-        [Authorize]
+        //[Authorize]
         [HttpDelete("{id}")]
 
         public async Task<ActionResult> DeleteTodoAsync(Guid id)

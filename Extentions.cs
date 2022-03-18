@@ -25,6 +25,7 @@ namespace CalenTaskApi
                 Id = todo.Id,
                 Description = todo.Description,
                 IsComplete = todo.IsComplete,
+                UserId = todo.UserId,
                 CreatedAt = todo.CreatedAt
             };
         }
